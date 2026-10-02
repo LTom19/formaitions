@@ -26,7 +26,7 @@ Le groupe a validé l’architecture. Les signatures ci-dessous sont le contrat 
 
 ## Non décidé
 
-Le secrétaire, le nombre exact de jours avant le rapport, l’adresse GitHub, le sens de « coin ouest » et la source des sprites AoE2. Voir [000-groupe.md](000-groupe.md). La filière est FISA, le groupe est le 2, l’effectif est 7. En attendant les sprites, l’essai utilise une silhouette dessinée, interchangeable. Il n’y a pas de second scénario à préparer.
+Le secrétaire, le nombre exact de jours avant le rapport, le sens de « coin ouest » et la source des sprites AoE2. Voir [000-groupe.md](000-groupe.md). La filière est FISA, le groupe est le 2, l’effectif est 7. Le dépôt d’entraînement est https://github.com/LTom19/formaitions ; le dépôt du groupe viendra ensuite. En attendant les sprites, l’essai utilise une silhouette dessinée, interchangeable. Il n’y a pas de second scénario à préparer.
 
 ## Signature publique
 

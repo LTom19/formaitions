@@ -8,8 +8,7 @@ Mise à jour : 2 octobre 2026, après lecture du document de cours complet et de
 - Soutenance : **15 décembre 2026**. La date FISE du 17 janvier ne concerne pas ce groupe.
 - Numéro de groupe : **2**. Le rapport devra s’appeler `2 python report.pdf`.
 - Effectif : **7**. Le sujet écrit « groupes de ≈ 6 » ; l’effectif réel de ce groupe est 7.
-- Dépôt GitHub : déjà créé, les 7 membres y sont. L’adresse sera collée ci-dessous quand elle aura été transmise. On ne crée pas un second dépôt.
-- URL : `____`
+- Dépôt d’entraînement, sur le compte personnel LTom19, privé, pour répéter le flux avant le dépôt du groupe. Les sept membres n’y sont pas. URL : https://github.com/LTom19/formaitions
 - Le professeur n’a pas annoncé de suite au projet. Le périmètre est celui des parties VI et VII seulement.
 
 ## Document lu
