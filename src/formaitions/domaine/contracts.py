@@ -36,7 +36,11 @@ class Vec2:
 
 @dataclass(frozen=True)
 class UnitState:
-    """Copie lisible d'une unité. La modifier ne change pas le monde."""
+    """Copie lisible d'une unité. La modifier ne change pas le monde.
+
+    Pas de direction, de vitesse ni de destination : un général voit les troupes
+    et leurs PV, pas le cap des ennemis.
+    """
 
     id: int
     kind: UnitKind
@@ -59,7 +63,11 @@ class ProjectileState:
 
 @dataclass(frozen=True)
 class Observation:
-    """Instantané figé transmis aux généraux."""
+    """Instantané figé transmis aux généraux.
+
+    Toutes les unités, alliées et ennemies, avec leurs PV. Les projectiles visibles
+    y figurent aussi. La direction des troupes n'y est pas.
+    """
 
     now: float
     map_size: tuple[int, int]
@@ -108,12 +116,26 @@ class Event:
 
 
 @dataclass(frozen=True)
+class Decision:
+    """Règle d'IA qui s'est déclenchée. `rule` ne peut pas être vide."""
+
+    time: float
+    general: str
+    rule: str
+    details: tuple[tuple[str, str], ...] = ()
+
+    def __post_init__(self) -> None:
+        if not self.rule.strip():
+            raise ValueError("une décision doit nommer la règle qui s'est déclenchée")
+
+
+@dataclass(frozen=True)
 class BattleResult:
     outcome: Outcome
     elapsed: float
     units: tuple[UnitState, ...]
     loss_timeline: tuple[Event, ...]
-    decision_log: tuple[Event, ...]
+    decision_log: tuple[Decision, ...]
 
 
 @runtime_checkable

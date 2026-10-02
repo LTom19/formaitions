@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import ast
 import inspect
+from dataclasses import fields
 from pathlib import Path
 
 import pytest
@@ -12,6 +13,7 @@ from formaitions.domaine.contracts import (
     FIXED_DT,
     Attack,
     BattleResult,
+    Decision,
     Event,
     General,
     Hold,
@@ -152,8 +154,21 @@ def test_unit_state_uses_float_position() -> None:
 
 def test_result_types_exist_for_the_public_return() -> None:
     assert Outcome.DRAW.value == "draw"
-    event = Event(0.0, "decision", (("general", "crassus"),))
-    assert event.details[0][0] == "general"
+    event = Event(0.0, "damage", (("source", "1"),))
+    assert event.details[0][0] == "source"
+    decision = Decision(0.0, "crassus", "spread_against_trample")
+    assert decision.rule == "spread_against_trample"
+    with pytest.raises(ValueError, match="règle"):
+        Decision(0.0, "crassus", "  ")
+
+
+def test_generals_do_not_receive_troop_direction() -> None:
+    hidden = {"facing", "heading", "velocity", "direction", "destination"}
+    visible = {field.name for field in fields(UnitState)}
+    assert visible.isdisjoint(hidden)
+    assert "hp" in visible
+    assert "position" in visible
+    assert "decision_log" in {field.name for field in fields(BattleResult)}
 
 
 def test_simulation_does_not_import_formations_ai_or_view() -> None:

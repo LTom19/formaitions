@@ -10,6 +10,11 @@ Mise à jour : 2 octobre 2026, après lecture du document de cours complet et de
 - Effectif : **7**. Le sujet écrit « groupes de ≈ 6 » ; l’effectif réel de ce groupe est 7.
 - Dépôt d’entraînement, sur le compte personnel LTom19, privé, pour répéter le flux avant le dépôt du groupe. Les sept membres n’y sont pas. URL : https://github.com/LTom19/formaitions
 - Le professeur n’a pas annoncé de suite au projet. Le périmètre est celui des parties VI et VII seulement.
+- Rapport visé le **8 décembre 2026**, une semaine avant la soutenance. Le professeur aura accès au dépôt GitHub du groupe pour lire le code. Le dépôt d’entraînement ci-dessus reste personnel.
+- `"W"` veut dire le **coin sud-ouest**. `"E"` veut dire le coin sud-est, pour comparer le comportement. Le château reste au centre.
+- La bataille n’est pas un script : aucun contrôle d’unité par un humain, et les chances de victoire doivent bouger quand les paramètres changent. Deux lancements identiques peuvent diverger.
+- Sauvegarde et chargement d’une bataille prévus pour la soutenance.
+- Les généraux voient toutes les troupes et leurs PV, pas la direction des troupes ennemies. Le journal nomme la règle déclenchée. Une unité vivante bloque le passage. Les Romains se serrent face aux archers et se dispersent face aux dégâts de zone. Le détail est dans [003-precisions-prof.md](003-precisions-prof.md).
 
 ## Document lu
 
@@ -27,7 +32,6 @@ Ce qui en sort pour le projet :
 ## Pas encore fixé
 
 - Secrétaire (format `NOM Prénom`) : `____`. Le sujet le recommande. Il suit qui fait quoi, assemble le PDF, et garde son module. Il n’est pas automatiquement le chef.
-- Nombre exact de jours entre le rapport et la soutenance : le sujet dit « quelques jours avant », sans chiffre. Le Git part immédiatement avant la soutenance, les diapositives immédiatement après.
 - Noms des sept membres. Les rôles ci-dessous restent ceux de la répartition, en attendant les noms.
 
 | Rôle | Module principal | Nom (`NOM Prénom`) |
@@ -90,14 +94,10 @@ Les sections 68 à 83, titres du sujet. Aucune autre liste numérotée ne figure
 
 Les sections 74 et 75 décrivent le problème tactique. Elles n’imposent pas un algorithme. La section 77 n’est pas une grille de points.
 
-Échéance connue : soutenance le 15 décembre 2026. Le découpage en sprints reste relatif tant que le calendrier des séances sur Celene n’est pas relevé.
+Échéance connue : rapport le 8 décembre 2026, soutenance le 15 décembre 2026. Le découpage en sprints reste relatif tant que le calendrier des séances sur Celene n’est pas relevé.
 
 ## Questions encore ouvertes
 
-1. Combien de jours avant le 15 décembre le rapport doit-il être sur Celene ? Le Git se remet-il en archive, par lien vers GitHub, ou les deux ?
-2. Les exigences du rapport sont-elles bien les sections 68 à 83, tant que le sujet est marqué « travail en cours » ?
-3. « Coin ouest » désigne-t-il un coin de la carte ou le bord ouest ?
-4. Un trébuchet qui rate inflige-t-il zéro dégât, ou une dispersion ? La salve de 5 du château vise-t-elle une cible ou cinq ?
-5. La sauvegarde citée pour la soutenance est-elle exigée, ou seulement un exemple ?
-6. L’interaction du jury consiste-t-elle à relancer des paramètres, ou aussi à commander des unités ?
-7. Le code des années précédentes annoncé par le `TODO` du sujet est-il disponible ? Le groupe ne l’attend pas pour commencer, et ne reprend pas le projet 2025.
+1. Les exigences du rapport sont-elles bien les sections 68 à 83, tant que le sujet est marqué « travail en cours » ?
+2. Un trébuchet qui rate inflige-t-il zéro dégât, ou une dispersion ? La salve de 5 du château vise-t-elle une cible ou cinq ?
+3. Le code des années précédentes annoncé par le `TODO` du sujet est-il disponible ? Le groupe ne l’attend pas pour commencer, et ne reprend pas le projet 2025.

@@ -1,6 +1,6 @@
 # FormAItions — sprint 0
 
-Groupe 2, FISA, sept personnes. Soutenance le 15 décembre 2026. Le professeur n’a pas annoncé de suite : le périmètre est Carrhes, parties VI et VII du cours.
+Groupe 2, FISA, sept personnes. Rapport visé le 8 décembre 2026, soutenance le 15 décembre 2026. Le professeur n’a pas annoncé de suite : le périmètre est Carrhes, parties VI et VII du cours.
 
 Ce dépôt contient les contrats gelés et un essai graphique d’une case. Il ne simule pas encore le combat ni les généraux.
 
@@ -34,5 +34,6 @@ L’image est écrite dans `artifacts/spike_isometric.png`. Sans la variable `SD
 - [docs/decisions/000-groupe.md](docs/decisions/000-groupe.md) — filière, secrétaire et questions ouvertes.
 - [docs/decisions/001-contrats.md](docs/decisions/001-contrats.md) — signatures et frontières entre packages.
 - [docs/decisions/002-essai-pygame.md](docs/decisions/002-essai-pygame.md) — Pygame retenu après l’essai d’une case.
+- [docs/decisions/003-precisions-prof.md](docs/decisions/003-precisions-prof.md) — sud-ouest, bataille non scriptée, journal des règles.
 
 Chaque commit doit porter le nom complet `NOM Prénom` de son auteur. Voir la décision 001.

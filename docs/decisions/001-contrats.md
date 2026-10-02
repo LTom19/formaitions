@@ -7,15 +7,19 @@ Le groupe a validé l’architecture. Les signatures ci-dessous sont le contrat 
 ## Décisions d’architecture
 
 1. Le pas de simulation est fixe : `FIXED_DT = 0.05` seconde de jeu. Le paramètre `speed` change le rapport au temps réel, pas `dt`.
-2. Si `seed` est fourni, deux appels devront produire la même bataille. Le générateur appartient au monde. Le sprint 0 ne simule pas encore.
+2. La bataille n'est pas un script et n'est pas déterministe. Deux appels identiques peuvent diverger. Changer les effectifs ou le coin de départ doit pouvoir augmenter ou diminuer les chances de victoire. `seed` reste dans la signature du sujet, sans promesse de rejeu.
 3. Les identifiants Python sont en anglais, comme la signature `Carrhae` du sujet. Le rapport peut être en français ou en anglais.
 4. Les formations vivent dans `formaitions.formations` et dans les généraux. `formaitions.simulation` ne contient pas le mot formation, sauf plus tard la requête spatiale du mur de boucliers, qui ne devra importer ni `formations` ni `ia`.
-5. Un général reçoit une `Observation` figée et renvoie des `Order`. Il ne modifie pas le monde. Le monde peut refuser un ordre ; le refus se verra au pas suivant.
+5. Un général reçoit une `Observation` figée et renvoie des `Order`. Il voit toutes les unités et leurs PV, alliées et ennemies, pas la direction des troupes. Il ne modifie pas le monde. Le monde peut refuser un ordre. Une unité vivante a une hitbox : on ne la traverse pas, on la contourne ou on la tue.
 6. `formaitions.vue` ne contient aucune règle. Importer `formaitions.vue` ne charge pas Pygame et n’ouvre pas de fenêtre. L’essai graphique est `python -m formaitions.vue.spike`.
 7. Python 3.10 ou plus récent, un seul environnement, tests avec `pytest`. Le cours (section 18.1) écrit 3.9 comme minimum et rend 3.10 obligatoire dès sa sortie. Le code utilise la syntaxe 3.10.
 8. Noms d’IA retenus pour la suite : Crassus et Suréna, avec des poids en arguments. Ils ne sont pas implémentés dans ce sprint.
-9. Minicarte retenue pour la suite : permanente dans un coin. Réversible si l’essai de navigation échoue.
-10. Les humains ne commandent pas les unités. Ils mettent en pause, règlent la vitesse, déplacent la caméra et relancent `Carrhae`. Ce point reste à confirmer avec l’enseignant, parce que le sujet dit « interaction » sans la détailler.
+9. La minicarte permanente est exigée pour se déplacer sur la carte.
+10. Aucun humain ne commande les unités. On peut relancer `Carrhae` avec d’autres paramètres, mettre en pause et changer la vitesse. La sauvegarde et le chargement d’une bataille sont prévus pour la soutenance.
+11. Le château est toujours au centre. `"W"` est le coin sud-ouest. `"E"` est le coin sud-est. `"NW"` et `"NE"` restent acceptés.
+12. Chaque entrée du journal de décisions nomme la règle déclenchée (`Decision.rule`).
+13. Le timeout est une sécurité si les IA n’agissent pas ou ne concluent pas. L’exemple du sujet, une minute sans dégât, reste le déclencheur de référence. On n’invente pas un second délai.
+14. On gagne par les formations qui s’adaptent, pas par des trajectoires écrites d’avance. Les Romains se serrent face aux archers et se dispersent face aux dégâts de zone. Les Parthes s’adaptent aussi. Les variantes d’une même IA doivent pouvoir s’affronter en headless.
 
 ## Hypothèses provisoires, pas des règles du sujet
 
@@ -26,7 +30,7 @@ Le groupe a validé l’architecture. Les signatures ci-dessous sont le contrat 
 
 ## Non décidé
 
-Le secrétaire, le nombre exact de jours avant le rapport, le sens de « coin ouest » et la source des sprites AoE2. Voir [000-groupe.md](000-groupe.md). La filière est FISA, le groupe est le 2, l’effectif est 7. Le dépôt d’entraînement est https://github.com/LTom19/formaitions ; le dépôt du groupe viendra ensuite. En attendant les sprites, l’essai utilise une silhouette dessinée, interchangeable. Il n’y a pas de second scénario à préparer.
+Le secrétaire, la liste exacte des exigences du rapport, le raté du trébuchet, la salve du château, la source des sprites AoE2, et la disponibilité du code des années précédentes. Voir [000-groupe.md](000-groupe.md). La filière est FISA, le groupe est le 2, l’effectif est 7. Le rapport est visé le 8 décembre 2026. Le dépôt d’entraînement est https://github.com/LTom19/formaitions. Le dépôt du groupe, celui que le professeur consultera, viendra ensuite.
 
 ## Signature publique
 

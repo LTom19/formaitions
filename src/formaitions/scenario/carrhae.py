@@ -18,8 +18,10 @@ def Carrhae(
 ) -> BattleResult:
     """Lance une bataille de Carrhes et renvoie son résultat.
 
-    `headless=True` ne devra pas créer de fenêtre. Les effectifs sont des paramètres :
-    les IA ne doivent pas les recopier en constantes. L'exécution arrive plus tard.
+    `headless=True` ne devra pas créer de fenêtre. Les effectifs et `roman_start_position`
+    sont des paramètres : les IA ne les recopient pas en trajectoire fixe. `"W"` est le
+    coin sud-ouest. Deux appels identiques peuvent diverger. `seed` reste dans la
+    signature du sujet, sans promesse de rejeu. L'exécution arrive plus tard.
     """
 
     del (
