@@ -1,0 +1,41 @@
+"""Données immuables partagées par le simulateur, les formations et les IA."""
+
+from formaitions.domaine.contracts import (
+    FIXED_DT,
+    Attack,
+    BattleResult,
+    Event,
+    General,
+    Hold,
+    MoveTo,
+    Observation,
+    Order,
+    Outcome,
+    Pack,
+    ProjectileState,
+    Team,
+    UnitKind,
+    UnitState,
+    Unpack,
+    Vec2,
+)
+
+__all__ = [
+    "FIXED_DT",
+    "Attack",
+    "BattleResult",
+    "Event",
+    "General",
+    "Hold",
+    "MoveTo",
+    "Observation",
+    "Order",
+    "Outcome",
+    "Pack",
+    "ProjectileState",
+    "Team",
+    "UnitKind",
+    "UnitState",
+    "Unpack",
+    "Vec2",
+]
