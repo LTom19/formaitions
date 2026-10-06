@@ -44,6 +44,8 @@ Ce qui en sort pour le projet :
 | Membre 6 | vue 2.5D | |
 | Membre 7 | scénario, IA de référence, campagne | |
 
+Le détail des huit tâches de chacun est dans [../repartition-taches.md](../repartition-taches.md). Le dossier et les fichiers de chacun sont dans [../dossiers.md](../dossiers.md).
+
 Chaque personne configure Git localement, sans compte partagé :
 
 ```bash

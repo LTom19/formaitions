@@ -1,10 +1,17 @@
-"""Coins de départ et centre du château. Pas encore de placement d'unités."""
+"""Coins de départ, centre du château, placement des armées. Membre 7.
+
+Tâches 1 et 2 dans docs/repartition-taches.md.
+Les coins sont écrits. `place_armies` reste à faire.
+Lancer : pytest -m membre7
+"""
 
 from __future__ import annotations
 
 from enum import Enum
 
-from formaitions.domaine.contracts import Vec2
+from formaitions.domaine.contracts import UnitState, Vec2
+
+MEMBER = 7
 
 CORNER_MARGIN = 8.0
 
@@ -63,3 +70,33 @@ def corner_anchor(corner: StartCorner, map_size: tuple[int, int]) -> Vec2:
     else:
         y = CORNER_MARGIN
     return Vec2(x, y)
+
+
+def place_armies(
+    map_size: tuple[int, int],
+    roman_start_position: str,
+    n_legionaries: int,
+    n_cataphracts: int,
+    n_cavalry_archers: int,
+    n_trebuchets: int,
+    seed: int | None = None,
+) -> tuple[UnitState, ...]:
+    """Pose les deux armées. Membre 7, tâche 2.
+
+    Romains autour du coin, sans bloc serré. Parthes entre 10 et 20 cases du centre,
+    entre les Romains et le château. Aucune unité sur une falaise ni dans l'emprise :
+    appeler `cliff_tiles` et `castle_footprint` dès qu'ils existent.
+    """
+
+    del (
+        map_size,
+        roman_start_position,
+        n_legionaries,
+        n_cataphracts,
+        n_cavalry_archers,
+        n_trebuchets,
+        seed,
+    )
+    raise NotImplementedError(
+        "Membre 7, tâche 2 : placement. docs/repartition-taches.md."
+    )

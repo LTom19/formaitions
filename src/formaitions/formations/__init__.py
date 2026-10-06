@@ -9,9 +9,11 @@ from formaitions.formations.commands import (
     Split,
     Spread,
     Transition,
+    Translation,
+    translate,
 )
-from formaitions.formations.model import Formation
-from formaitions.formations.shapes import Shape
+from formaitions.formations.model import Formation, cohesion_error, reassign
+from formaitions.formations.shapes import Shape, slots
 
 __all__ = [
     "Advance",
@@ -24,4 +26,9 @@ __all__ = [
     "Split",
     "Spread",
     "Transition",
+    "Translation",
+    "cohesion_error",
+    "reassign",
+    "slots",
+    "translate",
 ]

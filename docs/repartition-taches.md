@@ -2,11 +2,22 @@
 
 Document de travail. Il reprend les parties VI et VII du cours (sections 68 à 83, Vincent Hugot, 25 septembre 2026) et les contrats déjà gelés dans `docs/decisions/`. Il ne change pas ces contrats. Une modification de `Observation`, `Order` ou `step` reste soumise à deux revues, dont celle du membre 1.
 
-Sept membres, sept paquets de **huit tâches**. Les tâches 1 à 6 se codent et se testent sans attendre le code d’un autre. Les tâches 7 et 8 branchent ce paquet sur le reste. Chacun écrit les tests de ses huit tâches. Chacun relit les pull requests d’un seul autre membre, jamais les siennes.
+Le dossier de chacun est dans [dossiers.md](dossiers.md). Les fonctions nommées ci-dessous existent déjà dans le code. Chacune lève `NotImplementedError` avec le numéro de tâche. Tu écris le corps. Tu ne renommes pas la fonction. Tu ajoutes tes tests dans le fichier indiqué, sans retirer le test qui vérifie les noms des paramètres.
 
-Le secrétaire n’est pas encore nommé. Le sujet ne lui retire qu’une petite part de code. Ce document ne lui enlève aucune des huit tâches : le rapport et les diapositives sont un travail du groupe, en plus, au moment du rendu.
+```bash
+pytest -m membreN
+pytest
+```
+
+La seconde commande est celle qui doit rester verte avant une pull request.
+
+Sept membres, sept paquets de **huit tâches**. Les tâches 1 à 6 se codent et se testent sans attendre le code d'un autre. Les tâches 7 et 8 branchent ce paquet sur le reste. Chacun écrit les tests de ses huit tâches. Chacun relit les pull requests d'un seul autre membre, jamais les siennes.
+
+Le secrétaire n'est pas encore nommé. Le sujet ne lui retire qu'une petite part de code. Ce document ne lui enlève aucune des huit tâches : le rapport et les diapositives sont un travail du groupe, en plus, au moment du rendu.
 
 ## Nombres du sujet utilisés partout
+
+Les mêmes valeurs sont dans `src/formaitions/domaine/stats.py`. Importe `unit_stats` et les constantes. Ne les recopie pas dans ton module. Un test, `tests/test_stats.py`, casse si quelqu'un les change sans le dire.
 
 Carte 120×120. Château au centre, emprise 4×4, anneau de falaises d’une case, infranchissable au sol, franchissable par un tir. Pas de simulation : `FIXED_DT = 0,05` s. `speed` change le rapport au temps réel, pas ce pas.
 
@@ -35,7 +46,7 @@ Hypothèses encore jaunes, à la charge du membre 3, déjà écrites dans la dé
 
 ## Membre 1 — temps, déplacement, événements
 
-Fichiers : `src/formaitions/simulation/step.py`, et `src/formaitions/simulation/mouvement.py` s’il découpe le fichier. Tests : `tests/test_step.py`.
+Fichiers : `src/formaitions/simulation/step.py`, `mouvement.py`, `monde.py`. `World` existe. `observe`, `integrate_move`, `animation_blocks_movement` et le corps de `step` sont à écrire. Tests : `tests/test_step.py`. Commande : `pytest -m membre1`.
 
 Il fait avancer le monde d’un pas. Il ne calcule pas un dégât, il ne dessine rien, il ne choisit pas une formation.
 
@@ -59,7 +70,7 @@ Revue qu’il doit faire : les pull requests du membre 3, parce que le moment de
 
 ## Membre 2 — carte et collisions
 
-Fichiers à créer : `src/formaitions/simulation/carte.py`, `src/formaitions/simulation/collision.py`. Tests : `tests/test_carte.py`, `tests/test_collision.py`. Ces tests n’importent pas `step`.
+Fichiers : `src/formaitions/simulation/carte.py`, `collision.py`. `Map` se construit à la main. Les fonctions sont déclarées. Tests : `tests/test_carte.py`, `tests/test_collision.py`. Ces tests n’importent pas `step`. Commande : `pytest -m membre2`.
 
 Il dit où l’on a le droit de poser un disque. Il ne déplace pas l’unité, il n’enlève pas de points de vie, il ne décide pas du mur de boucliers.
 
@@ -71,7 +82,7 @@ Il dit où l’on a le droit de poser un disque. Il ne déplace pas l’unité, 
 
 4. **Vivant bloque, mort non.** `blocked(unit, position, others, map)` est vrai si la position tombe sur une falaise, sur le château, ou sur le disque d’une unité de `others` dont `alive` est vrai. Une unité morte ne bloque pas, même si sa position est au même endroit. Allié et ennemi bloquent de la même façon. La fonction ne modifie pas les listes reçues. Terminé quand les trois cas du README passent : falaise refusée, deux légionnaires de rayon 0,20 qui ne peuvent pas se chevaucher, mort qui ne bloque plus.
 
-5. **Segment.** `segment_blocked(start, end, others, map)` est vrai si un disque du rayon de l’unité, déplacé le long du segment, toucherait un obstacle de la tâche 4. Le membre 1 s’en sert pour le contournement. Le membre 2 ne déplace personne. Terminé quand un segment qui rase un légionnaire vivant est refusé, et que le même segment est accepté si ce légionnaire est mort.
+5. **Segment.** `segment_blocked(start, end, unit, others, game_map)` est vrai si le disque de `unit`, déplacé le long du segment, toucherait un obstacle de la tâche 4. Le membre 1 s’en sert pour le contournement. Le membre 2 ne déplace personne. Terminé quand un segment qui rase un légionnaire vivant est refusé, et que le même segment est accepté si ce légionnaire est mort.
 
 6. **Voisinage, sans bonus.** `units_within(units, origin, radius)` renvoie les unités vivantes dont le centre est à une distance ≤ `radius` de `origin`, origine exclue. Le membre 3 l’appellera avec 0,42 (voisins d’un légionnaire) et 0,75 (piétinement). Le membre 2 ne sait pas ce qu’est une armure. Terminé quand un test place cinq points à 0,42 et un sixième à 0,43, et ne récupère que les cinq.
 
@@ -83,7 +94,7 @@ Revue qu’il doit faire : les pull requests du membre 1, parce qu’il vérifie
 
 ## Membre 3 — règles de combat
 
-Fichier à créer : `src/formaitions/simulation/combat.py`. Tests : `tests/test_combat.py`, sur des unités fictives, sans `step` et sans `formations`.
+Fichier : `src/formaitions/simulation/combat.py`. Le type `AttackResolution` est déjà là. Tests : `tests/test_combat.py`, sur des unités fictives, sans `step` et sans `formations`. Commande : `pytest -m membre3`.
 
 Il transforme un ordre `Attack` arrivé au bout de son animation en dégâts et en projectiles. Il ne déplace pas les unités, il ne fait pas voler le projectile (la position du projectile avance dans `step`, tâche 1 du membre 1, une fois le projectile créé), il ne décide pas qui il faut viser.
 
@@ -93,11 +104,11 @@ Il transforme un ordre `Attack` arrivé au bout de son animation en dégâts et 
 
 3. **Mur de boucliers.** `shield_wall(legionary, units)` est vrai si au moins 4 autres légionnaires vivants ont leur centre à ≤ 0,42. Le bonus est +6 d’armure de perçage, et seulement de perçage : la mêlée reste à 6. Le mur ne consulte pas l’identifiant de formation. Un test avec 4 voisins à 0,42 donne une flèche de 12 qui inflige 1. Un test avec 3 voisins inflige 6. Un test où l’un des 4 meurt (`alive=False`) inflige 6 au calcul suivant. La distance est lue sur les positions, ou via `units_within` du membre 2 si ce module est déjà importable ; les tests de cette tâche fabriquent les positions eux-mêmes et n’échouent pas si `collision.py` est absent.
 
-4. **Qui a le droit de tirer.** `can_start_attack(attacker, target, map)` est faux si l’attaquant n’a pas d’ordre `Attack`, si `reload_remaining > 0`, si une animation est déjà en cours, ou si la cible est hors de portée. Portées : légionnaire et cataphracte au contact (tâche 3 du membre 2 : distance ≤ somme des rayons) ; archer ≤ 8 ; trébuchet entre 4 et 16 inclus ; château ≤ 11. Le château et le trébuchet ne frappent pas en mêlée à travers les falaises : un légionnaire au contact du château, de l’autre côté de l’anneau, n’est pas une cible de mêlée valide, et un légionnaire n’a aucune attaque contre le château. Terminé quand chaque portée a un test juste en dessous et juste au-dessus du seuil.
+4. **Qui a le droit de tirer.** `can_start_attack(attacker, target, game_map, order)` est faux si `order` n’est pas un `Attack`, si `reload_remaining > 0`, si une animation est déjà en cours, ou si la cible est hors de portée. L’ordre est un argument parce que `UnitState` ne le stocke pas. Portées : légionnaire et cataphracte au contact (tâche 3 du membre 2 : distance ≤ somme des rayons) ; archer ≤ 8 ; trébuchet entre 4 et 16 inclus ; château ≤ 11. Le château et le trébuchet ne frappent pas en mêlée à travers les falaises : un légionnaire au contact du château, de l’autre côté de l’anneau, n’est pas une cible de mêlée valide, et un légionnaire n’a aucune attaque contre le château. Terminé quand chaque portée a un test juste en dessous et juste au-dessus du seuil.
 
 5. **Fin d’animation.** `resolve_attack_end(...)` applique les dégâts. L’appeler au début de l’animation est une erreur que le test interdit : un second appel avec `animation_just_finished=False` ne retire rien. Cataphracte : la cible principale doit être au contact, sinon la fonction ne retire rien ; si elle l’est, la cible principale et toute unité vivante à ≤ 0,75 du centre subissent `damage_simple(14, armure_de_melee)`. Archer : précision 100 %, création d’un `ProjectileState` vers la cible, dégâts au moment où `step` signalera l’impact, pas à la création. Le test d’archer vérifie qu’un projectile a été ajouté et que les PV n’ont pas encore baissé dans cette fonction si le projectile n’est pas arrivé. Pour l’archer, l’arrivée est immédiate dans le test unitaire seulement si la fonction reçoit `impact=True` ; le vol lui-même n’est pas codé ici.
 
-6. **Trébuchet et château.** Le jet est tiré dans le générateur fourni par l’appelant, au moment du tir. Contre un bâtiment, seuil 0,80 ; contre une unité, seuil 0,15. En dessous du seuil, le tir est réussi et passe par la formule de la tâche 2 (bâtiment) ou 1 (unité). Au-dessus, les dégâts valent 0 et un événement `shot_missed` est prévu dans les détails. Le château, en fin d’animation, crée cinq projectiles d’attaque 15 vers l’ennemi vivant le plus proche dont la distance est ≤ 11. S’il n’y a qu’une cible, les cinq ont cette cible. S’il n’y a personne à portée, il ne crée rien. Le rechargement du château (2 s) et du trébuchet (10 s) est un nombre retourné à `step`, pas un `sleep`. Terminé quand un générateur truqué à 0,79 puis 0,80 fait réussir puis rater un tir sur le château, et quand la salve compte cinq projectiles.
+6. **Trébuchet et château.** Le jet est l’argument `roll` de `resolve_attack_end`, tiré par l’appelant. Contre un bâtiment, seuil 0,80 ; contre une unité, seuil 0,15. En dessous du seuil, le tir est réussi et passe par la formule de la tâche 2 (bâtiment) ou 1 (unité). Au-dessus, les dégâts valent 0 et un événement `shot_missed` est prévu dans les détails. Le château n’est pas une `UnitState` : `resolve_castle_volley(units, castle_position, next_projectile_id)` crée cinq projectiles d’attaque 15 vers l’ennemi vivant le plus proche dont la distance est ≤ 11. S’il n’y a qu’une cible, les cinq ont cette cible. S’il n’y a personne à portée, il ne crée rien. Le rechargement du château (2 s) et du trébuchet (10 s) est `reload_remaining` dans `AttackResolution`, pas un `sleep`. Terminé quand un `roll` de 0,79 puis 0,80 fait réussir puis rater un tir sur le château, et quand la salve compte cinq projectiles.
 
 7. **Liste d’événements, pas d’écriture cachée.** La fonction retourne les nouveaux projectiles, les nouveaux PV et les événements (`damage`, `shot_missed`, `shield_wall_on`, `shield_wall_off`). Elle ne va pas chercher le monde global. Terminé quand un test remplace les PV d’entrée et vérifie que l’objet d’entrée n’a pas été muté : la copie de sortie porte les nouveaux PV.
 
@@ -107,7 +118,7 @@ Revue qu’il doit faire : les pull requests du membre 4. Il vérifie que Crassu
 
 ## Membre 4 — formes, cohésion, Crassus
 
-Fichiers : `src/formaitions/formations/shapes.py`, `src/formaitions/formations/model.py`, et `src/formaitions/ia/crassus.py` à créer. Tests : `tests/test_shapes.py`, `tests/test_crassus.py`. Aucun test ne crée de monde et aucun n’appelle `step`.
+Fichiers : `src/formaitions/formations/shapes.py`, `model.py`, `src/formaitions/ia/crassus.py`. `Shape`, `Formation` et `Crassus(aggressiveness=50)` existent. `slots`, `reassign`, `cohesion_error` et `decide` sont à écrire. Tests : `tests/test_shapes.py`, `tests/test_crassus.py`. Aucun test ne crée de monde et aucun n’appelle `step`. Commande : `pytest -m membre4`.
 
 Il dit où chaque soldat devrait être, et ce que le général romain décide. Il ne fait pas marcher les unités. Il n’écrit pas la traduction `Split` / `Merge`. Il n’écrit pas Suréna.
 
@@ -139,13 +150,13 @@ Revue qu’il doit faire : les pull requests du membre 7. Il vérifie que `Carrh
 
 ## Membre 5 — commandes de formation et Suréna
 
-Fichier : `src/formaitions/formations/commands.py`. Fichier à créer : `src/formaitions/ia/surena.py`. Tests : `tests/test_commands.py`, `tests/test_surena.py`.
+Fichiers : `src/formaitions/formations/commands.py`, `src/formaitions/ia/surena.py`. Les sept commandes et `Surena(boldness=50)` existent. `translate` renvoie une `Translation` (`orders`, `formations`). Tests : `tests/test_commands.py`, `tests/test_surena.py`. Commande : `pytest -m membre5`.
 
 Il traduit une intention collective en ordres individuels, et il décide pour les Parthes. Il ne choisit pas la place géométrique de chaque soldat dans la forme : il reçoit `slots_for(shape, ids, anchor)`. Il ne code pas Crassus. Il ne déplace personne.
 
 Les noms sont déjà gelés. Le premier jour, il relit cette liste avec le membre 4 et il ne la change pas : `FormCircle`, `Advance`, `Screen`, `Spread`, `Transition`, `Split`, `Merge`.
 
-1. **Advance.** `translate(Advance, formation, slots_for)` produit exactement un `MoveTo` par membre, vers le slot de la forme courante ramené sur `destination`. Aucun id oublié, aucun id doublé, aucun id étranger. Le test injecte un `slots_for` faux qui retourne des positions connues, et compare les destinations une à une. Il n’appelle pas le vrai `slots` du membre 4.
+1. **Advance.** `translate(Advance, formation, slots_for)` renvoie une `Translation` dont `orders` contient exactement un `MoveTo` par membre, vers le slot de la forme courante ramené sur `destination`. Aucun id oublié, aucun id doublé, aucun id étranger. Le test injecte un `slots_for` faux qui retourne des positions connues, et compare les destinations une à une. Il n’appelle pas le vrai `slots` du membre 4.
 
 2. **Split.** Entrée : une formation et `member_ids` de ceux qui partent. Sortie : deux nouvelles formations (deux identifiants neufs, différents de l’ancien), la partition exacte des membres, et les `MoveTo` de chaque moitié vers les slots que `slots_for` renvoie pour cette moitié. Chaque soldat d’origine est dans une seule des deux. Terminé sur une formation de 10 dont 4 partent.
 
@@ -172,7 +183,7 @@ Revue qu’il doit faire : les pull requests du membre 6. Il vérifie que la vue
 
 ## Membre 6 — vue 2.5D
 
-Dossier : `src/formaitions/vue/`. L’essai existant `spike.py` reste lançable. Le rendu de bataille est un nouveau module, par exemple `src/formaitions/vue/bataille.py`. Tests : `tests/test_vue.py`, avec `SDL_VIDEODRIVER=dummy`. `import formaitions.vue` ne charge pas Pygame : le test `tests/test_vue_import.py` doit rester vert.
+Dossier : `src/formaitions/vue/`. L’essai `spike.py` reste lançable. Le rendu est `bataille.py` : `draw(observation, playback)` et `pan_to_minimap(playback, x, y)`. `playback.py` est déjà écrit. Tests : `tests/test_vue.py`, avec `SDL_VIDEODRIVER=dummy`. `import formaitions.vue` ne charge pas Pygame : le test `tests/test_vue_import.py` doit rester vert. Commande : `pytest -m membre6`. N’importe pas `bataille` depuis `vue/__init__.py`.
 
 Il dessine un instantané. Il ne recalcule aucun dégât, aucune collision, aucun slot.
 
@@ -182,11 +193,11 @@ Il dessine un instantané. Il ne recalcule aucun dégât, aucune collision, aucu
 
 3. **Caméra, sans physique.** Le défilement change la fenêtre visible sur la carte. Les coordonnées du monde ne sont pas modifiées. Un test appelle le décalage de caméra et vérifie que l’`Observation` d’entrée est inchangée.
 
-4. **Minicarte permanente.** Un rectangle fixe dans un coin dessine la carte entière : château, falaises, unités. Un clic (en test : un appel `pan_to_minimap(x, y)`) recentre la caméra sur le point correspondant. La touche M du sujet n’est pas exigée en plus : le groupe a déjà décidé que la minicarte reste affichée. Terminé quand la minicarte et la vue principale comptent le même nombre d’unités vivantes pour le même instantané.
+4. **Minicarte permanente.** Un rectangle fixe dans un coin dessine la carte entière : château, falaises, unités. Un clic (en test : un appel `pan_to_minimap(playback, x, y)`) recentre `playback.camera`. La touche M du sujet n’est pas exigée en plus : le groupe a déjà décidé que la minicarte reste affichée. Terminé quand la minicarte et la vue principale comptent le même nombre d’unités vivantes pour le même instantané.
 
-5. **Pause.** Une touche, exposée aussi comme `set_paused(True)`, fige le dessin : deux captures successives sont identiques, et le temps affiché reste `observation.now`. La reprise affiche l’instantané suivant quand on lui en donne un nouveau. La pause ne crée pas d’ordre.
+5. **Pause.** Une touche appelle `set_paused(playback, True)` et fige le dessin : deux captures successives sont identiques, et le temps affiché reste `observation.now`. La reprise affiche l’instantané suivant quand on lui en donne un nouveau. La pause ne crée pas d’ordre.
 
-6. **Vitesse.** Des valeurs 0,5, 1, 2 et 4 sont affichées et stockées dans un objet `Playback` que le membre 7 lira. Changer la vitesse ne modifie pas `FIXED_DT` et ne lance pas de bataille. Terminé quand un test passe de 1 à 4 et vérifie que `Playback.speed` vaut 4, et que `FIXED_DT` vaut encore 0,05.
+6. **Vitesse.** `set_speed` et `set_paused` sont déjà écrits dans `playback.py`. Les valeurs 0,5, 1, 2 et 4 y sont stockées, et `FIXED_DT` n’y est pas touché : le test existe déjà. Le travail restant est d’afficher `playback.speed` et de relier les touches à ces deux fonctions. Changer la vitesse ne lance pas de bataille.
 
 7. **Lire l’état, ne pas l’inventer.** Le trébuchet `packed=True` et le trébuchet `packed=False` ont deux dessins. Le mur de boucliers n’est dessiné que si l’instantané porte l’information. Aujourd’hui `UnitState` n’a pas ce champ : le membre 6 ne le devine pas depuis les distances. Il décrit le champ voulu (`shield_wall: bool`) dans la pull request, et il attend les deux revues, dont le membre 1, avant de l’utiliser. Tant que le champ n’est pas dans `domaine`, le test de cette tâche vérifie seulement les deux dessins de `packed`, qui existe déjà.
 
@@ -196,7 +207,7 @@ Revue qu’il doit faire : les pull requests du membre 5, comme indiqué plus ha
 
 ## Membre 7 — scénario, IA de référence, sauvegarde
 
-Fichiers : `src/formaitions/scenario/carrhae.py`, `placement.py`, `save.py`, et `src/formaitions/ia/braindead.py`, `src/formaitions/ia/bedlam.py` à créer. Tests : `tests/test_placement.py` (déjà commencé), `tests/test_carrhae.py`, `tests/test_save.py`, `tests/test_reference_ai.py`.
+Fichiers : `src/formaitions/scenario/carrhae.py`, `placement.py`, `save.py`, `victoire.py`, `campagne.py`, et `src/formaitions/ia/braindead.py`, `bedlam.py`. Les coins de départ sont écrits. `place_armies`, `outcome`, `run_campaign`, `Carrhae`, `save_battle` et les deux `decide` sont à écrire. Tests : `tests/test_placement.py` (coins déjà verts), `tests/test_carrhae.py`, `tests/test_save.py`, `tests/test_reference_ai.py`. Commande : `pytest -m membre7`.
 
 Il met les armées sur la carte, il tourne la boucle, il sait qui a gagné, il fournit les deux IA de référence de la section 78. Il n’améliore pas Crassus ni Suréna.
 

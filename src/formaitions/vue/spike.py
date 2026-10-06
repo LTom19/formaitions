@@ -1,4 +1,4 @@
-"""Essai sprint 0 : une case isométrique et une silhouette, sans règle de jeu.
+"""Essai sprint 0 : une case isométrique et une silhouette, sans règle de jeu. Membre 6.
 
 Les tests fixent `SDL_VIDEODRIVER=dummy` avant d'importer ce module.
 Lancé directement, il utilise l'écran disponible.
@@ -10,6 +10,8 @@ import os
 import sys
 
 import pygame
+
+MEMBER = 6
 
 TILE_WIDTH = 64
 TILE_HEIGHT = 32

@@ -7,7 +7,11 @@ import os
 os.environ.setdefault("SDL_VIDEODRIVER", "dummy")
 os.environ.setdefault("SDL_AUDIODRIVER", "dummy")
 
+import pytest
+
 from formaitions.vue.spike import CANVAS_SIZE, render_spike
+
+pytestmark = pytest.mark.membre6
 
 
 def test_spike_draws_one_tile_and_one_sprite_without_a_window() -> None:

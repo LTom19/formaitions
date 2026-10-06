@@ -7,6 +7,10 @@ import subprocess
 import sys
 from pathlib import Path
 
+import pytest
+
+pytestmark = pytest.mark.membre6
+
 
 def test_vue_package_import_does_not_load_pygame() -> None:
     root = Path(__file__).resolve().parents[1]

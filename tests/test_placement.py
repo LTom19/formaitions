@@ -9,6 +9,8 @@ from formaitions.scenario.placement import (
     parse_start_position,
 )
 
+pytestmark = pytest.mark.membre7
+
 
 def test_west_means_southwest() -> None:
     assert parse_start_position("W") is StartCorner.SOUTHWEST

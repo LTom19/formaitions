@@ -5,6 +5,8 @@ import pytest
 from formaitions.domaine.contracts import Observation, Vec2
 from formaitions.scenario.save import load_battle, save_battle
 
+pytestmark = pytest.mark.membre7
+
 
 def _snapshot() -> Observation:
     return Observation(

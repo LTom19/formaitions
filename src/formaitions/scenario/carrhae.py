@@ -1,6 +1,14 @@
-"""Point d'entrée du scénario Carrhes. La bataille elle-même commence au sprint 1."""
+"""Point d'entrée du scénario Carrhes. Membre 7, tâche 6.
+
+Boucle prévue : observation, `decide` des deux généraux, `step`, jusqu'à `outcome`.
+`headless=True` n'importe pas `formaitions.vue` et n'ouvre pas de fenêtre.
+`speed` ne fait dormir la boucle qu'en mode fenêtré.
+Lancer : pytest -m membre7
+"""
 
 from formaitions.domaine.contracts import BattleResult, General
+
+MEMBER = 7
 
 
 def Carrhae(
@@ -37,4 +45,6 @@ def Carrhae(
         headless,
         speed,
     )
-    raise NotImplementedError("Carrhae est signé, pas encore simulé.")
+    raise NotImplementedError(
+        "Membre 7, tâche 6 : boucle de Carrhae. docs/repartition-taches.md."
+    )

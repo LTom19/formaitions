@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "formaitions"
 version = "0.0.1"
-description = "Simulateur de bataille FormAItions, sprint 0."
+description = "Simulateur de bataille FormAItions. Squelette par membre, règles à écrire."
 requires-python = ">=3.10"
 dependencies = ["pygame>=2.5"]
 
@@ -18,3 +18,12 @@ where = ["src"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+markers = [
+    "membre1: déplacement, pas de temps, monde",
+    "membre2: carte et collisions",
+    "membre3: combat",
+    "membre4: formes et Crassus",
+    "membre5: commandes et Suréna",
+    "membre6: vue",
+    "membre7: scénario et IA de référence",
+]

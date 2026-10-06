@@ -195,6 +195,21 @@ def test_simulation_does_not_import_formations_ai_or_view() -> None:
             "formaitions.scenario",
             "pygame",
         },
+        "ia": {
+            "formaitions.simulation",
+            "formaitions.vue",
+            "formaitions.scenario",
+            "pygame",
+        },
+        "vue": {
+            "formaitions.simulation",
+            "formaitions.ia",
+            "formaitions.formations",
+            "formaitions.scenario",
+        },
+        "scenario": {
+            "pygame",
+        },
     }
     violations: list[str] = []
     for package, banned in banned_by_package.items():
